@@ -20,6 +20,7 @@ The dashboard is the combination of a series of windows which can be closed inde
 - [**Rofi**](https://github.com/davatorium/rofi) is used for Application Search.
 - [**Picom**](https://github.com/yshui/picom) is used for the compositor, although a lot of people like using forks of this.
 - The fonts are [**Sarasa Mono CL**](https://github.com/be5invis/Sarasa-Gothic) for Main Font, [**SFMono**](https://github.com/NishantGadihoke/SFMonoFont) for Terminal Font, and [**JetBrainsMono Nerd Font**](https://github.com/tomwei7/JetBrainsMono-Nerd-Front) for the Nerd Font, plus it's used a bit for text too.
+- The Icon Theme is [Zafiro Icons](https://github.com/zayronxio/Zafiro-icons).
 
 
 # Installation
@@ -68,6 +69,13 @@ It may happen that your font names don't match the ones used in these dots, in w
 $ fc-list | grep -i "YOURFONTNAME"
 ```
 Find what the font is actually called, and change it in the config files. All the widgets used in EWW use the fonts defined at the beginning of the eww.scss file, so you just need to change those for that. Rofi has the font name inside config.rasi, and the terminals do so in their corresponding configuration files.
+
+### Icons
+Copy the Zafiro-icons directory to ~/.local/share/icons
+```
+$ git clone https://github.com/zayronxio/Zafiro-icons.git
+$ cp -r Zafiro-icons ~/.local/share/icons/
+```
 
 ### Configuration files
 Now that you have all your dependencies in check, you can just copy the files in this repo to their corresponding spots.
