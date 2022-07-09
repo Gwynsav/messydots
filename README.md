@@ -72,7 +72,9 @@ Find what the font is actually called, and change it in the config files. All th
 ### Configuration files
 Now that you have all your dependencies in check, you can just copy the files in this repo to their corresponding spots.
 ```
-$ cd /path/to/messydots
+The following command requires git. It can be installed through your package manager.
+$ git clone https://github.com/Gwynsav/messydots.git
+$ cd /path/to/messydots (~/messydots by default)
 $ cp -r config/* ~/.config/
 $ cp -r local/bin/* ~/.local/bin/
 $ cp bashrc ~/.bashrc && cp xinitrc ~/.xinitrc && cp Xresources ~/.Xresources
