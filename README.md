@@ -4,6 +4,9 @@ First of all, this rice uses [Kizu's](https://github.com/janleigh/dotfiles) colo
 
 This is my first time uploading my dotfiles to GitHub, and I haven't even been using Linux and ricing for that long, so please be patient and don't hesitate to point out anything that could be improved about the manner in which I present them here.
 
+![showcase](basicshowcase.png)
+
+The dashboard is the combination of a series of windows which can be closed independently: the main System Panel, the Fetch, Calendar and Weather, and a simple powermenu.
 
 # Dependencies/Requirements
 
