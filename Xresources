@@ -1,0 +1,4 @@
+# just sxiv config
+Sxiv.background: #0b0f10
+Sxiv.foreground: #7ba5dd
+Sxiv.font: SarasaMonoCL-9

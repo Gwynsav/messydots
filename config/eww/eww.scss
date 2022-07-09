@@ -1,0 +1,443 @@
+// GENERAL STUFF ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+*{
+	all: unset;
+}
+
+$bg: #0b0f10;
+$black: #151a1c;
+$altbg: #2c3436;
+
+$fg: #c5c8c9;
+$fg2: #6e7071;
+$gray: #b2b2b2;
+
+$red: #df5b61;
+$altgreen: #5cb37f;
+$green: #87c7a1;
+$yellow: #ffb29b;
+$altyellow: #de8f78;
+$blue: #7ba5dd;
+$altblue: #bac8ef;
+$magenta: #bc83e3;
+$cyan: #7d91f5;
+
+$altfont: "JetBrainsMono Nerd Font";
+
+button:hover {
+	color:$altblue;
+}
+
+window {
+	color: $fg;
+	font-family: "Sarasa Mono CL";
+}
+
+tooltip {
+	color: $bg;
+	background-color: $altblue;
+	font-weight: bolder;
+}
+
+// BAR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.eww-bar {
+	padding: 0.3rem;
+	background-color: $bg;
+}
+
+.rofi-icon, .lang-icon {
+	font-size: 1.8em;
+	color: $blue;
+}
+
+.time {
+	background-color: $black;
+	border-radius: 10px;
+	padding: 0.55em;
+}
+.hour {
+	font-size: 1.4em;
+	font-weight: bolder;
+}
+.min {
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+.panel-icon {
+	color: $yellow;
+	font-size: 24px;
+	font-family: $altfont;
+}
+
+.ws {
+	background-color: $black;
+	border-radius: 20px;
+	padding: 0.2em 0.5em;
+	font-size: 1.5em;
+	font-family: $altfont;
+	.0, .01, .02, .03, .04, .05, .06,
+	.011, .022, .033, .044, .055, .066 {
+		padding: 0.3em 0;
+	}
+	.0 {
+		color: $altbg;
+	}
+	.01, .02, .03, .04, .05, .06 {
+		color: $altbg;
+	}
+	.011, .022, .033, .044, .055, .066 {
+		color: $blue;
+	}
+	&:hover {
+		color: $altblue;
+}}
+
+// CALENDAR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.cal-window {
+	background-color: transparent;
+}
+.cal-box {
+	background-color: $black;
+	padding: 1em 0.75em 0.25em;
+	border-radius: 10px;
+	.month-year {
+		font-size: 18px;
+		font-weight: bold;
+		margin: 0.5em 0 0;
+	}
+	.day-names {
+		margin: 1em 0.75em 0;
+		font-size: 14px;
+		font-weight: bold;
+		color: $cyan;
+	}
+	.cal {
+		padding: 1em 0.75em 0;
+}}
+calendar {
+	&:selected {
+		color: $yellow;
+	}
+	&:indeterminate {
+		color: rgba(205, 219, 249, 0.3);
+}}
+calendar.button {
+	color: $gray;
+}
+calendar.highlight {
+	color: $cyan;
+	font-weight: bold;
+	padding: 20px;
+	margin: 20px;
+}
+
+// WEATHER PANEL ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.weedge {
+	min-height: 270px;
+	min-width: 185px;
+	background-color: $black;
+	border-radius: 10px;
+	padding: 1em;
+}
+.calweather {
+	background-color: $bg;
+	min-height: 240px;
+	min-width: 170px;
+	padding: 1em 0.75em 0.25em;
+	border-radius: 10px;
+	.weicon {
+		font-family: $altfont;
+		font-size: 80px;
+		color: $yellow;
+	}
+	.wereport {
+		font-size: 20px;
+		color: $yellow;
+	}
+	.wetemp {
+		margin-top: 0.5em;
+		color: $altblue;
+	}
+	.wefeel {
+		font-size: 10px;
+		color: $altbg;
+		margin-top: -0.5em;
+		margin-bottom: 0.5em;
+	}
+	.wehumid {
+		color: $blue;
+}}
+
+// SYSPANEL ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.sysp-window {
+	background-color: $black;
+	border-radius: 10px;
+	padding: 1.5em 1.5em;
+	.row2 {
+		padding: 0 1em;
+	}
+	.row3 {
+		padding: 0 0.5em;
+}}
+
+// NETWORK & BLUETOOTH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.netpanel, .bluepanel {
+	color: $bg;
+	padding: 0.5em 1.5em;
+	border-radius: 10px;
+	min-width: 192px;
+}
+.netpanel {
+	background-color: $yellow;
+}
+.bluepanel {
+	background-color: $cyan;
+}
+.net-status, .blue-status {
+	font-family: $altfont;
+	font-size: 30px;
+}
+.net-text, .blue-text {
+	font-size: 12px;
+	font-weight: bold;
+	margin: 1em 0 0.7em 0;
+}
+.net-info, .blue-info {
+	font-size: 11px;
+	margin: 0 0 1em 0;
+}
+
+// MUSIC ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.musicbox {
+	background-color: $yellow;
+	border-radius: 10px;
+	margin: 0 0 0 0.5em;
+}
+.music-bg {
+	background-image: url("/home/gwynsav/.config/eww/playerbg.png");
+	background-size: cover;
+	min-width: 198px;
+	padding: 0.4em 0;
+	border-radius: 10px;
+	color: $bg;
+}
+.music-info {
+	background-color: transparent;
+}
+.np {
+	margin: 0.7em;
+	font-weight: bold;
+	font-size: 14px;
+}	
+.title {
+	font-size: 12px;
+	font-weight: bolder;
+	margin: 0 0.7em 0.3em 0.7em;
+}
+.artist {
+	font-size: 10px;
+}
+.album {
+	font-size: 11px;
+}
+.music-ctrl {
+	margin: 1.5em 0 -0.5em 0;
+}
+
+// music volume ;;;;;;;;;;;;;;;;;;;;;;;
+.mus-vol {
+	margin: 0 0.35em 0 0.4em;
+}
+.musvol-icon {
+	color: $bg;
+	font-family: $altfont;
+	font-size: 15px;
+	margin: 0 0.1em 0.3em 0;
+}
+.musvol-bar trough {
+	min-width: 10px;
+	min-height: 110px;
+	background-color: $altyellow;
+}
+.musvol-bar trough highlight {
+	background-color: $bg;
+}
+
+// music bar ;;;;;;;;;;;;;;;;;;;;;;;;;;
+.mus-prog {
+	margin: 1em 0.7em 0 0.7em;
+}
+.musprog-bar trough {
+	min-width: 110px;
+	min-height: 10px;
+	background-color: $black;
+	border-radius: 10px;
+}
+.musprog-bar trough highlight {
+        margin: 3px;
+	background-color: $yellow;
+}
+.musprog-info {
+	font-size: 10px;
+	color: $bg;
+	margin: 0 0 0 0.7em;
+}
+
+
+// bars ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.sys-vol, .mic-vol {
+	background-color: $bg;
+	border-radius: 15px;
+	padding: 0.5em 1em;
+}
+.sysvol-icon, .micvol-icon {
+	color: $blue;
+	font-size: 18px;
+	margin-right: 0.7em;
+}
+scale trough {
+	all: unset;
+	background-color: $black;
+	min-width: 150px;
+	min-height: 10px;
+	border-radius: 10px;
+}
+scale trough highlight {
+	background-color: $blue;
+	border-radius: 10px;
+}
+
+// PROFILE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.avatar {
+	background-image: url("/home/gwynsav/.config/eww/avatar.png");
+	background-size: cover;
+	min-width: 36px;
+	min-height: 36px;
+	border-radius: 100%;
+}
+.username, .hostname {
+	margin-left: 0.7em;
+}
+.username {
+	font-size: 12px;
+	font-weight: bold;
+	color: $gray;
+}
+.hostname {
+	font-size: 10px;
+	font-weight: bolder;
+	color: $altbg;
+}
+
+// min-weather ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.weather {
+	font-family: $altfont;
+	font-size: 11px;
+	font-weight: bolder;
+	color: $altbg;
+}
+.wea-info {
+	background-color: $bg;
+	border-radius: 15px;
+	padding: 0.5em 1em;
+}
+.cal-but {
+	background-color: $bg;
+	border-radius: 100%;
+	padding: 0.5em 0.9em;
+}
+
+// options ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.off, .set-but {
+	font-family: $altfont;
+	font-size: 20px;
+	color: $red;
+}
+
+// FETCH (SPAGUETTI HELL :/) ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.fetchframe {
+	background-color: $black;
+	border-radius: 10px;
+	padding: 1em;
+}
+.fetch {
+	background-color: $bg;
+	border-radius: 10px;
+	min-width: 140px;
+	min-height: 210px;
+	padding: 1em;
+}
+.ftchtitle, .os, .krn, .pkg, .upt, .sh, .hname, .sname {
+	color: $altbg;
+}
+
+.bunny {
+	font-size: 15px;
+	font-weight: bold;
+	margin: 0.2em 0 -0.4em 0;
+}
+.bunny5, .bunny7, .ftchclose, .uptime {
+	color: $red;
+}
+.bunny3 {
+	margin-left: 0.5em;
+}
+.bunny4, .bunny6, .bunny8 {
+	margin: 0 -0.16em;
+}
+.bunny8 {
+	margin-left: -0.7em;
+}
+
+.os, .krn, .pkg, .upt, .sh {
+	font-size: 11px;
+	font-weight: bold;
+	margin-bottom: -1em;
+}
+.osname, .krname, .pkgcnt, .uptime, .shname {
+	font-weight: bolder;
+}
+.osname {
+	color: $blue;
+}
+.krname {
+	color: $green;
+}
+.shname {
+	color: $magenta;
+}
+.pkgcnt {
+	color: $yellow;
+}
+.host {
+	padding-top: 0.3em;
+}
+.uname {
+	font-weight: bolder;
+	color: $gray;
+}
+
+// POWER WINDOW ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+.powerframe {
+	background-color: $black;
+	border-radius: 10px;
+	min-width: 108px;
+	min-height: 384px;
+}
+.powermenu {
+	min-width: 94px;
+	min-height: 370px; 
+	background-color: $bg;
+	border-radius: 10px;
+	font-family: $altfont;
+	font-size: 64px;
+}
+.logout {
+	color: $blue;
+}
+.reboot {
+	color: $yellow;
+}
+.poweroff {
+	color: $red;
+}

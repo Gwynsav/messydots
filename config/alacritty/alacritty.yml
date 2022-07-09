@@ -1,0 +1,77 @@
+# This is actually just Kizu's Alacritty config, I changed a color or two but other than that there isn't much to be seen.
+
+env:
+  # TERM variable
+  #
+  # This value is used to set the `$TERM` environment variable for
+  # each instance of Alacritty. If it is not present, alacritty will
+  # check the local terminfo database and use `alacritty` if it is
+  # available, otherwise `xterm-256color` is used.
+  TERM: 'xterm-256color'
+
+window:
+  padding:
+    x: 21
+    y: 18
+
+scrolling:
+  history: 1000
+  multiplier: 3
+
+# Font configuration
+font:
+  normal:
+    family: 'SFMono'
+    style: Regular
+  bold:
+    family: 'SFMono'
+    style: Bold
+  italic:
+    family: 'SFMono'
+    style: Italic
+
+  # Point size
+  size: 8.5
+  offset:
+    y: 0
+  glyph_offset:
+    y: 0
+
+colors:
+  # Default colors
+  primary:
+    background: '0x0B0F10'
+    foreground: '0xc5c8c9'
+
+  # Normal colors
+  normal:
+    black:   '0x131718'
+    red:     '0xdf5b61'
+    green:   '0x5cb37f'
+    yellow:  '0xde8f78'
+    blue:    '0x7ba5dd'
+    magenta: '0xbc83e3'
+    cyan:    '0x7d91f5'
+    white:   '0xc4c4c4'
+
+  # Bright colors
+  bright:
+    black:   '0x151a1c'
+    red:     '0xee6a70'
+    green:   '0x96d6b0'
+    yellow:  '0xffb29b'
+    blue:    '0xbac8ef'
+    magenta: '0xcb92f2'
+    cyan:    '0x7fc8db'
+    white:   '0xcccccc'
+
+cursor:
+  # Cursor style
+  #
+  # Values for `style`:
+  #   - ▇ Block
+  #   - _ Underline
+  #   - | Beam
+  style: 'Underline'
+
+  vi_mode_style: 'Underline'

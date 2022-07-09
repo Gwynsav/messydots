@@ -1,0 +1,24 @@
+# CROSSPLATFORM SHELL PROMPT DECORATION
+# Don't print a new line at the start of the prompt
+add_newline = false
+
+# Prompt
+format = """
+$directory$git_branch$node$rust
+$cmd_duration[›](bold green) [|](dimmed white) (none)"""
+
+# Custom character prompt
+# [character]                           
+# success_symbol = "[➜ ](bold green)"
+# error_symbol = "[➜ ](bold red)"
+
+# Modules
+[cmd_duration]
+disabled = false
+
+[directory]
+home_symbol = ""
+format = "[$path]($style) "
+
+[time]
+disabled = true

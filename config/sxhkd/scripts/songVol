@@ -1,0 +1,11 @@
+#!/bin/sh
+
+case $1 in
+	"up")
+		cmus-remote -v +3% ;;
+	"down")
+		cmus-remote -v -3% ;;
+esac
+
+vol=$(cmus-remote -Q | grep vol_left)
+dunstify -h string:x-dunst-stack-tag:songvol -i "$HOME/.local/share/icons/Zafiro-icons/mimetypes/48/audio-mp3.svg" "Music" "Volume set to <b>${vol##* }%</b>"

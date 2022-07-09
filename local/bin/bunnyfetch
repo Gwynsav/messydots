@@ -1,0 +1,50 @@
+#!/bin/bash
+# Stolen off Kizu with love :3
+# Tiny colored fetch script
+# Requires Typicons Font to display the icons
+# elenapan @ github
+
+f=3 b=4
+for j in f b; do
+  for i in {0..7}; do
+    printf -v $j$i %b "\e[${!j}${i}m"
+  done
+done
+d=$'\e[1m'
+t=$'\e[0m'
+v=$'\e[7m'
+
+# Items
+h=wm
+wmname="$(xprop -id $(xprop -root -notype | awk '$1=="_NET_SUPPORTING_WM_CHECK:"{print $5}') -notype -f _NET_WM_NAME 8t | grep "WM_NAME" | cut -f2 -d \")"
+
+k=kr
+kernel="$(uname -r)"
+kernel=${kernel%%_*}
+
+sh=sh
+shell=$(basename $SHELL)
+# here you may ask yourself why the eww bunnyfetch and this one use different commands for this. I simply use a different shell for root and userspace. If you use the same one then there isn't really a point so modify it at will.
+
+o=os
+os="$(uname -s)"
+
+p=pk
+pkg="$(xbps-query -l | wc -l)"
+#pkg="$(pacman -Q | wc -l)"
+
+colors=$(for i in {0..7}; do echo -en "\e[${1}$((30 + $i))m▁▁▁"; done)
+
+# (\ /)
+# ( . .)
+# c(")(")
+
+tput clear
+cat << EOF
+ 
+  (\ /)    $f4$k $t~ $kernel
+  ( $d. .$t)   $f4$sh $t~ $shell
+  c($f1"$t)($f1"$t)  $f4$p $t~ $pkg
+$colors
+ 
+EOF

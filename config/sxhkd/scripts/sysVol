@@ -1,0 +1,17 @@
+#!/bin/sh
+
+case $1 in
+	"up")
+		amixer sset Master 3%+
+		dunstify -h string:x-dunst-stack-tag:songvol -i "$HOME/.local/share/icons/Zafiro-icons/panel/22/audio-volume-medium.svg" "Audio" "Volume set to <b>$(amixer sget Master | grep "Left:" | awk -F '[][]' '{print $2}')</b>" ;;
+	"down")
+		amixer sset Master 3%- 
+		dunstify -h string:x-dunst-stack-tag:songvol -i "$HOME/.local/share/icons/Zafiro-icons/panel/22/audio-volume-low.svg" "Audio" "Volume set to <b>$(amixer sget Master | grep "Left:" | awk -F '[][]' '{print $2}')</b>" ;;
+	"mute")
+		amixer sset Master toggle
+		if [ "$(amixer sget Master | grep "Left:" | awk '{print $6}')" = "[on]" ]; then
+			dunstify -h string:x-dunst-stack-tag:songvol -i "$HOME/.local/share/icons/Zafiro-icons/panel/22/audio-volume-muted.svg" "Audio" "Volume <b>Muted</b>" 
+		else
+			dunstify -h string:x-dunst-stack-tag:songvol -i "$HOME/.local/share/icons/Zafiro-icons/panel/22/audio-volume-high.svg" "Audio" "Volume <b>Unmuted</b>" 
+		fi ;;
+esac

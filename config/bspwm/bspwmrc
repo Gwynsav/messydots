@@ -1,0 +1,61 @@
+#!/bin/sh
+
+# ##############################################################################
+# #                                  FUNCTIONS                                 # 
+# ##############################################################################
+
+# Credits to 6gk/polka
+rule() { bspc rule -a "$@" & }
+config() { bspc config "$@" & }
+start() { pkill -x "$1"; { sleep 0.1; "$@" & }; }
+
+# ##############################################################################
+# #                                AUTOSTART APPS                              #
+# ##############################################################################
+
+# Autostart Apps
+pgrep -x sxhkd > /dev/null || sxhkd &
+pkill eww ; /usr/bin/eww open bar &
+picom --experimental-backends &
+
+# Setup wallpaper
+hsetroot -cover $HOME/.config/bspwm/SmdMaintenance.jpg
+
+# Kizu said: I hate mouse drift.
+# I am too lazy to remove this but not enough to avoid writing a 2 line comment over it.
+xset m 0 0
+
+# Fix eww bar fullscreen behavior
+pkill eww_fullscreen_fix.sh ; $HOME/.config/bspwm/scripts/eww_fullscreen_fix.sh &
+
+# ##############################################################################
+# #                                 WINDOW RULES                               #
+# ##############################################################################
+
+bspc monitor -d 1 2 3 4 5 6
+
+rule discord                        desktop=2 follow=off
+rule Steam                          desktop=6
+
+# ##############################################################################
+# #                            GENERAL CONFIGURATION                           #
+# ##############################################################################
+
+config pointer_modifier             Mod4
+
+config window_gap                   10
+config border_width 		    2
+config focused_border_color 	    "#7ba5dd"
+config normal_border_color 	    "#0b0f10"
+
+config left_padding                 41
+
+config split_ratio                  0.56
+config borderless_monocle           true
+config gapless_monocle              false
+
+# ##############################################################################
+# #                                 MISCELLANEOUS                              #
+# ##############################################################################
+xdo lower -N eww-bar
+xsetroot -cursor_name left_ptr &

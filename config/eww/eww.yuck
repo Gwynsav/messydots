@@ -1,0 +1,260 @@
+;; BAR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defwindow bar
+	:geometry (geometry :x "0" :y "0"
+			    :height "100%" :width "41px")
+	:monitor 0 :wm-ignore false
+	(bar))
+
+(defwidget bar []
+	(box :class "eww-bar" :orientation "v"
+		(top)
+		(center)
+		(bottom)))
+
+(defwidget top []
+	(box :orientation "v" :halign "center" :valign "start" :space-evenly "true" 
+		(launcher)
+		(language)))
+
+(defwidget center []
+	(box :orientation "v" :halign "center" :valign "center" :space-evenly "false"
+		(workspaces)))
+
+(defwidget bottom []
+	(box :orientation "v" :halign "center" :valign "end" :space-evenly "false" :spacing "7"
+		(time)
+		(panelbut)))
+
+;; BAR WIDGETS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defwidget launcher []
+	(button :class "rofi-icon" :onclick "./scripts/misc.sh launcher" ""))
+
+(defwidget language []
+	(button :class "lang-icon" :onclick "./scripts/misc.sh lang" ""))
+
+(defwidget workspaces []
+	(literal :content workspace))
+(deflisten workspace "./scripts/getWorkspaces")
+
+(defwidget panelbut []
+	(button :class "panel-icon" :valign "center" :onclick "./scripts/openwindow.sh syspanel" ""))
+
+(defwidget time []
+	(box :class "time" :orientation "v" :halign "center" :space-evenly "false"
+		(button :class "hour" :tooltip "It's ${hour}:${min} ${mer}" :onclick "./scripts/openwindow.sh syspanel"
+			hour)
+		(button :class "min" :tooltip "It's ${hour}:${min} ${mer}" :onclick "$HOME/.config/eww/scripts/openwindow.sh syspanel"
+			min)))
+(defpoll hour :interval "1s" "date -u '+%I'")
+(defpoll min :interval "1s" "date -u '+%M'")
+(defpoll mer :interval "1s" "date -u '+%P'")
+
+;; CALENDAR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defwindow calendar
+	:geometry (geometry :x "46px" :y "-300px" :anchor "bottom left"
+			    :width "505px" :height "230px")
+	:windowtype "dock" :stacking "fg" :wm-ignore false
+(cal))
+
+(defwidget cal []
+	(box :class "cal-window" :orientation "h" :space-evenly "false" :spacing 5
+		(box :class "cal-box" :orientation "v" :space-evenly "false"
+			(label :class "month-year" :text month_year)
+			(box :class "day-names" :orientation "h" :space-evenly "true"
+				(label :text "Su")
+					(label :text "Mo")
+					(label :text "Tu")
+					(label :text "We")
+					(label :text "Th")
+					(label :text "Fr")
+					(label :text "Sa"))
+				(calendar :class "cal"
+					:show-details false :show-heading false :show-day-names false
+					:day calendar_day :month calendar_month :year calendar_year))
+		(box :class "weedge"
+			(box :class "calweather" :orientation "v" :space-evenly "false" :spacing 10 :halign "center"
+				(label :class "weicon" :text "${wicon}")
+				(label :class "wereport" :text "${wdesc}")
+				(label :class "wetemp" :text "It's ${wtemp} out")
+				(label :class "wefeel" :text "Feels like ${wfeel} though")
+				(label :class "wehumid" :text "Humidity is at ${whumid}%")))))
+(defvar call false)
+(defpoll calendar_day :interval "10h" "date -u '+%d'")
+(defpoll calendar_month :interval "10h" "./scripts/misc.sh month")
+(defpoll calendar_year :interval "10h" "date -u '+%Y'")
+(defpoll month_year :interval "24h" "date -u '+%B, %Y'")
+
+(defpoll whumid :interval "900s" "./scripts/weather.sh humidity")
+(defpoll wfeel :interval "900s" "./scripts/weather.sh feels_like")
+(defpoll wtemp :interval "900s" "./scripts/weather.sh current_temp")
+(defpoll wdesc :interval "900s" "./scripts/weather.sh weather_desc")
+(defpoll wicon :interval "900s" "./scripts/weather.sh weather_desc_icon")
+
+;; SYSPANEL ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defwindow systempanel
+	:geometry (geometry :x "46px" :y "-5px" :anchor "bottom left"
+			    :width "505px" :height "290px")
+	:windowtype "dock" :stacking "fg" :wm-ignore false
+(syspanel))
+
+(defwidget syspanel []
+	(box :class "sysp-window" :orientation "v" :valign "center" :space-evenly "false" :spacing 10
+		(box :class "row1" :orientation "h" :space-evenly "false" :spacing 5
+			(box :class "column1" :orientation "v" :spacing 10
+				(netpanel)
+				(bluepanel))
+			(musicplayer))
+		(box :class "row2" :orientation "h"
+			(sysvolume)
+			(micvolume))
+		(box :class "row3" :orientation "h" 
+			(profile)
+			(weather)
+			(options))))
+(defvar sysp false)
+
+;; SYSPANEL WIDGETS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defwidget netpanel []
+	(box :class "netpanel" :orientation "h" :halign "start" :space-evenly "true"
+		(button :class "net-status" :halign "start" :onclick "./scripts/network.sh toggle" "${net-status}")
+		(box :class "net-information" :orientation "v" :space-evenly "false"
+			(button :class "net-text" :halign "end" :onclick "kitty -e iwctl" "Network")
+			(label :class "net-info" :halign "end" :text network :limit-width "18"))))
+(defpoll network :interval "3s" "./scripts/network.sh network")
+(defpoll net-status :interval "3s" "./scripts/network.sh status")
+
+(defwidget bluepanel []
+	(box :class "bluepanel" :orientation "h" :halign "start" :space-evenly "true"
+		(button :class "blue-status" :halign "start" :onclick "./scripts/bluetooth.sh power" "${blue-status}")
+		(box :class "blue-information" :orientation "v" :space-evenly "false"
+			(button :class "blue-text" :halign "end" :onclick "kitty -e bluetoothctl" "Bluetooth")
+			(label :class "blue-info" :halign "end" :text bluetooth :limit-width "18"))))
+(defpoll bluetooth :interval "3s" "./scripts/bluetooth.sh device")
+(defpoll blue-status :interval "3s" "./scripts/bluetooth.sh status")
+
+(defwidget musicplayer []
+	(box :class "musicbox" :orientation "h" :halign "end" :space-evenly "false"
+		(box :class "music-bg" :orientation "v" :space-evenly "false"
+			(box :class "music-info" :orientation "v" :space-evenly "false"
+				(label :class "np" :text mus-np)
+				(label :class "title" :text mus-title :limit-width 28)
+				(label :class "artist" :text mus-artist :limit-width 36)
+				(label :class "album" :text mus-album :limit-width 32))
+			(box :class "music-ctrl" :orientation "h" :halign "center" :space-evenly "false" :spacing 20
+				(button :onclick "playerctl previous" "")
+				(button :onclick "playerctl play-pause" mus-tog)
+				(button :onclick "playerctl next" ""))
+			(box :class "mus-prog" :orientation "h" :space-evenly "false"
+				(scale :class "musprog-bar" :orientation "h" :min 0 :max 101 :active false :value mus-prog)
+				(label :class "musprog-info" :text "${mus-prog-display}")))
+		(box :class "mus-vol" :orientation "v" :valign "center" :space-evenly "false"
+			(label :class "musvol-icon" :text "")
+			(scale	:class "musvol-bar" :orientation "v" :flipped true :min 0 :max 100 :onchange "playerctl volume 0.{}" :value musvol))))
+(defpoll musvol     :interval "500ms" "./scripts/volume.sh musvol")
+(defpoll mus-np     :interval "3s"    "./scripts/music.sh status")
+(defpoll mus-tog    :interval "500ms" "./scripts/music.sh statusbut")
+(defpoll mus-title  :interval "3s"    "./scripts/music.sh title")
+(defpoll mus-artist :interval "3s"    "./scripts/music.sh artist")
+(defpoll mus-album  :interval "3s"    "./scripts/music.sh album")
+(defpoll mus-prog   :interval "1s"    "./scripts/music.sh progress")
+(defpoll mus-prog-display   :interval "1s"    "./scripts/music.sh dispprog")
+
+(defwidget sysvolume []
+	(box :class "sys-vol" :orientation "h" :halign "start" :space-evenly "false"
+		(button :class "sysvol-icon" :tooltip "Volume: ${sysvol}%" :onclick "amixer sset ${audevice} toggle" "${sysico}")
+		(scale	:class "sysvol-bar" :orientation "h" :min 0 :max 101 :onchange "amixer sset ${audevice} {}%" :value sysvol)))
+(defpoll audevice :interval "15s" "./scripts/volume.sh audevice")
+(defpoll sysvol :interval "500ms" "./scripts/volume.sh sysvol")
+(defpoll sysico :interval "1s" "./scripts/volume.sh sysmute")
+
+(defwidget micvolume []
+	(box :class "mic-vol" :orientation "h" :halign "end" :space-evenly "false"
+		(button :class "micvol-icon" :tooltip "Microphone: ${micvol}%" :onclick "amixer sset Capture toggle" "${micico}")
+		(scale	:class "micvol-bar" :orientation "h" :min 0 :max 101 :onchange "amixer sset Capture {}%" :value micvol)))
+(defpoll micvol :interval "500ms" "./scripts/volume.sh micvol")
+(defpoll micico :interval "1s" "./scripts/volume.sh micmute")
+
+(defwidget profile []
+	(box :class "profile" :orientation "h" :space-evenly "false" :halign "start"
+		(box :class "avatar")
+		(box :class "names" :orientation "v" :valign "center" :space-evenly "false"
+			(button :class "username" :onclick "./scripts/openwindow.sh fetch" "${username}")
+			(label :class "hostname" :text "${hostname}"))))
+(defpoll username :interval "60s" "whoami")
+(defpoll hostname :interval "60s" "hostname")
+
+(defwidget weather []
+	(box :class "weather" :orientation "h" :valign "center" :halign "center" :space-evenly "false" :spacing 8
+		(button :class "cal-but"  :onclick "./scripts/openwindow.sh calendar" "")
+		(button :class "wea-info" :onclick "./scripts/openwindow.sh calendar" "${wicon} ${wtemp}")))
+
+(defwidget options []
+	(box :class "options" :orientation "h" :halign "end" :space-evenly "false" :spacing 15
+		(button :class "set-but"  :onclick "kitty -e ranger ~/.config/eww" "")
+		(button :class "off" :onclick "./scripts/openwindow.sh power" "")))
+
+;; FETCH ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defwindow fetch :geometry (geometry :x "557px" :y "-6px" :anchor "bottom left"
+				     :width "160px" :height "230px")
+		:windowtype "dock" :stacking "fg" :wm-ignore false
+(fetch))
+
+(defwidget fetch []
+	(box :class "fetchframe"
+		(box :class "fetch" :orientation "v" :halign "center" :valign "end" :space-evenly "false" :spacing 5
+			(box :class "titlebar" :orientation "h"
+				(label :class "ftchtitle" :halign "start" :text "./bunnyfetch")
+				(button :class "ftchclose" :halign "end" :onclick "./scripts/openwindow.sh fetch" ""))
+			(box :class "bunny" :orientation "v" :halign "center"
+				(label :class "bunny1" :halign "center" :valign "start" :text "/) /)  ")
+				(label :class "bunny2" :halign "center" :valign "start" :text "( . .) ")
+				(box :class "bunny3" :orientation "h" :halign "center" :valign "start"
+					(label :class "bunny4" :halign "center" :valign "start" :text "c(")
+					(label :class "bunny5" :halign "center" :valign "start" :text "@")
+					(label :class "bunny6" :halign "center" :valign "start" :text ")(")
+					(label :class "bunny7" :halign "center" :valign "start" :text "@")
+					(label :class "bunny8" :halign "center" :valign "start" :text ")")))
+			(box :class "ftchrow" :orientation "h" :space-evenly "true"
+				(box :orientation "v" :halign "center" :spacing 5
+					(label :class "os" :text "os:")
+					(label :class "osname" :text "${osname}"))
+				(box :orientation "v" :halign "center" :spacing 5
+					(label :class "pkg" :text "pkg:")
+					(label :class "pkgcnt" :text "${pkgcnt}")))
+			(box :class "ftchrow2" :orientation "h" :space-evenly "true"
+				(box :orientation "v" :halign "center" :spacing 5
+					(label :class "krn" :text "krn:")
+					(label :class "krname" :text "${krname}"))
+				(box :orientation "v" :halign "center" :spacing 5
+					(label :class "sh" :text "sh:")
+					(label :class "shname" :text "${shname}")))
+			(box :orientation "v" :spacing 5
+				(label :class "upt" :halign "start" :text "upt:")
+				(label :class "uptime" :halign "start" :text "${uptime}"))
+			(box :class "host" :orientation "h" :halign "end" :space-evenly "false"
+				(label :class "uname" :text "${uname}")
+				(label :class "sname" :text "@")
+				(label :class "hname" :text "${hname}")))))
+(defpoll osname :interval "300s" "./scripts/fetch.sh os")
+(defpoll krname :interval "300s" "./scripts/fetch.sh krn")
+(defpoll pkgcnt :interval "30s" "./scripts/fetch.sh pkg")
+(defpoll uptime :interval "60s" "./scripts/fetch.sh upt")
+(defpoll uname :interval "300s" "./scripts/fetch.sh uname")
+(defpoll hname :interval "300s" "./scripts/fetch.sh hname")
+(defpoll shname :interval "300s" "./scripts/fetch.sh sh")
+(defvar ftch false)
+
+
+;; POWERMENU ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defwindow powermenu :geometry (geometry :x "-1%" :y "0%" :anchor "center right"
+					:width "5%" :height "20%")
+		:windowtype "dock" :stacking "fg" :wm-ignore false 
+(powermenu))
+
+(defwidget powermenu []
+	(box :class "powerframe"
+		(box :class "powermenu" :orientation "v" :halign "center" :valign "center" :space-evenly "true" :spacing 15 
+			(button :class "logout" :onclick "bspc quit" "")
+			(button :class "reboot" :onclick "sudo reboot" "")
+			(button :class "poweroff" :onclick "sudo poweroff" ""))))
+(defvar power false)

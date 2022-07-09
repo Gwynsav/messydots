@@ -1,0 +1,147 @@
+#########################
+#	PROGRAMS	#
+#########################
+
+# hide bar
+super + shift + b
+	$HOME/.config/eww/scripts/openwindow.sh bar
+
+# terminal emulator
+super + Return
+	kitty
+
+# program launcher
+super + @space
+	sh $HOME/.local/bin/appmnu
+
+# system panel
+super + d
+	$HOME/.config/eww/scripts/openwindow.sh syspanel
+
+# file manager
+super + e
+	kitty -e ranger ~/
+
+# task manager
+ctrl + shift + Escape
+	kitty -e htop
+
+# browser
+super + shift + e
+	kitty -e nvim
+
+# make sxhkd reload its configuration files:
+super + alt + r
+	pkill -USR1 -x sxhkd
+
+
+#########################
+#	  MEDIA		#
+#########################
+
+# cmus play
+XF86Audio{Play,Next,Prev}
+	sh ~/.config/sxhkd/scripts/songPlay {play,next,prev}
+
+# cmus volume
+alt + XF86Audio{RaiseVolume,LowerVolume}
+	sh ~/.config/sxhkd/scripts/songVol {up,down}
+
+# sys volume
+XF86Audio{RaiseVolume,LowerVolume,Mute}
+	sh ~/.config/sxhkd/scripts/sysVol {up,down,mute}
+
+# screenshot
+{_,shift} + Print
+	scrot {-s -f,_} '/tmp/%F_%T_$wx$h.png' -e 'xclip -selection clipboard -target image/png -i $f'	
+
+# keyboard language
+super + p
+	sh .config/eww/scripts/misc.sh lang
+
+
+#########################
+# 	  BSPWM		#
+#########################
+
+# quit/restart bspwm
+ctrl + super + {q,r}
+	bspc {quit,wm -r}
+
+# close and kill
+super + {_,shift} + q
+	bspc node -{c,k}
+
+# alternate between the tiled and monocle layout
+super + m
+	bspc desktop -l next
+
+# send the newest marked node to the newest preselected node
+super + y
+	bspc node newest.marked.local -n newest.!automatic.local
+
+# swap the current node and the biggest window
+super + g
+	bspc node -s biggest.window
+
+# set the window state
+super + {t,s,f}
+	bspc node -t {tiled,floating,fullscreen}
+
+# set the node flags
+super + ctrl + {m,x,y,z}
+	bspc node -g {marked,locked,sticky,private}
+
+# focus the node in the given direction
+super + shift + {h,j,k,l}
+	bspc node -s {west,south,north,east}
+
+# focus the next/previous window in the current desktop
+super + {_,shift + }c
+	bspc node -f {next,prev}.local.!hidden.window
+
+# focus the next/previous desktop in the current monitor
+super + bracket{left,right}
+	bspc desktop -f {prev,next}.local
+
+# focus the last node/desktop
+super + {grave,Tab}
+	bspc {node,desktop} -f last
+
+# focus the older or newer node in the focus history
+super + {o,i}
+	bspc wm -h off; \
+	bspc node {older,newer} -f; \
+	bspc wm -h on
+
+# focus or send to the given desktop
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d} '^{1-9,10}'
+
+# preselect the direction
+super + ctrl + {h,j,k,l}
+	bspc node -p {west,south,north,east}
+
+# preselect the ratio
+super + ctrl + {1-9}
+	bspc node -o 0.{1-9}
+
+# cancel the preselection for the focused node
+super + ctrl + space
+	bspc node -p cancel
+
+# cancel the preselection for the focused desktop
+super + ctrl + shift + space
+	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+# expand window in corresponding Vim key direction
+super + alt + {h,j,k,l}
+	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# expand window in corresponding Vim key direction
+super + shift + alt + {h,j,k,l}
+        bspc node -z {left 20 0,bottom 0 -20,top 0 20,right -20 0}
+
+# move a floating window
+super + {h,j,k,l}
+	bspc node -v {-20 0,0 20,0 -20,20 0}
