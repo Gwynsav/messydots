@@ -1,0 +1,23 @@
+#!/bin/sh
+
+case $1 in
+	"play")
+		playerctl play-pause ;;
+	"next")
+	        playerctl next ;;
+	"prev")
+		playerctl previous ;;
+esac
+
+status() {
+   status=$(playerctl status)
+   [ "$status" = "Playing" ] || status="Paused"
+   echo "$status"
+}
+
+song=$(playerctl metadata --format '{{title}}')
+artist=$(playerctl metadata --format '{{artist}}')
+album=$(playerctl metadata --format '{{album}}')
+status="status"
+
+dunstify -h string:x-dunst-stack-tag:play -i "$HOME/.local/share/icons/Zafiro-icons/mimetypes/48/audio-mp3.svg" "$(eval ${status})" "<i>${song#*title }</i>\n${artist#*artist } - ${album#*album }"
