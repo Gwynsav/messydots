@@ -1,0 +1,15 @@
+#!/bin/sh
+
+case $1 in
+	"up")
+		playerctl volume 0.03+ ;;
+	"down")
+		playerctl volume 0.03- ;;
+esac
+
+# this one took me more time than I care to admit
+vol=$(playerctl volume)
+vol=${vol%0000*}
+[ "$vol" = "1.00" ] && vol=100 || vol=${vol##*.}
+
+dunstify -h string:x-dunst-stack-tag:songvol -i "$HOME/.local/share/icons/Zafiro-icons/mimetypes/48/audio-mp3.svg" "Music" "Volume set to <b>$vol%</b>"

@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# awk is hereby forbidden.
+
+case $1 in
+	"up")
+           amixer sset Master 3%+
+           state=$(amixer sget Master | grep "Left:")
+           state=${state#*[}
+           dunstify -h string:x-dunst-stack-tag:songvol -i "$HOME/.local/share/icons/Zafiro-icons/panel/22/audio-volume-medium.svg" "Audio" "Volume set to <b>${state%%]*}</b>" ;;
+	"down")
+           amixer sset Master 3%- 
+           state=$(amixer sget Master | grep "Left:")
+           state=${state#*[}
+           dunstify -h string:x-dunst-stack-tag:songvol -i "$HOME/.local/share/icons/Zafiro-icons/panel/22/audio-volume-low.svg" "Audio" "Volume set to <b>${state%%]*}</b>" ;;
+	"mute")
+           amixer sset Master toggle
+           state=$(amixer sget Master | grep "Left:")
+           state=${state##*[}
+           [ "${state%%]*}" = "on" ] && dunstify -h string:x-dunst-stack-tag:songvol -i "$HOME/.local/share/icons/Zafiro-icons/panel/22/audio-volume-high.svg" "Audio" "Volume <b>Unmuted</b>" || dunstify -h string:x-dunst-stack-tag:songvol -i "$HOME/.local/share/icons/Zafiro-icons/panel/22/audio-volume-muted.svg" "Audio" "Volume <b>Muted</b>" ;; 
+esac
