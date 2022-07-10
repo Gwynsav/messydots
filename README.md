@@ -83,7 +83,7 @@ Now that you have all your dependencies in check, you can just copy the files in
 ```
 The following command requires git. It can be installed through your package manager.
 $ git clone https://github.com/Gwynsav/messydots.git
-$ cd /path/to/messydots (~/messydots by default)
+$ cd ~/messydots
 $ cp -r config/* ~/.config/
 $ cp -r local/bin/* ~/.local/bin/
 $ cp bashrc ~/.bashrc && cp xinitrc ~/.xinitrc && cp Xresources ~/.Xresources
