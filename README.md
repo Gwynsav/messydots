@@ -13,6 +13,7 @@ The dashboard is the combination of a series of windows which can be closed inde
 - [**BSPWM**](https://github.com/baskerville/bspwm) for the Window Manager and [**SXHKD**](https://github.com/baskerville/sxhkd) for Keybindings.
 - [**EWW**](https://github.com/elkowar/eww) for the Bar and other Widgets.
   - The music player uses **playerctl** to interact with music playback.
+  - The eww_fullscreen_fix.sh script requires **xdo** in order to work.
 - [**hsetroot**](https://github.com/himdel/hsetroot) for the Wallpaper.
 - Either [**Kitty**](https://github.com/kovidgoyal/kitty) or [**Alacritty**](https://github.com/alacritty/alacritty) for the Terminal Emulator, both have config files in this repo (defaults use Kitty). You may also choose to use your own. 
 - By default the shell is **bash**. However, I did my best to keep all the scripts in this rice POSIX compliant and the only file that uses bash in specific is my bashrc file, which you can easily replace for your own shell's equivalent. Yes, all the scripts have been extensively tested with shells other than bash.
@@ -30,11 +31,11 @@ Most packages mentioned above are rather common so they should be available for 
 
 For **Arch Linux**, run:
 ```
-# pacman -S bspwm sxhkd hsetroot kitty starship dunst rofi picom playerctl
+# pacman -S bspwm sxhkd hsetroot kitty starship dunst rofi picom playerctl xdo
 ```
 For **Void Linux**, run:
 ```
-# xbps-install -S bspwm sxhkd hsetroot kitty starship dunst rofi picom playerctl
+# xbps-install -S bspwm sxhkd hsetroot kitty starship dunst rofi picom playerctl xdo
 ```
 
 ### EWW
