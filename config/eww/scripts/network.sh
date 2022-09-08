@@ -1,30 +1,17 @@
 #!/bin/sh
-
-# I avoid using AWK.
-device=$(iwctl device list)
-device=${device##*-}
-device=${device#* }
-
-network=$(iwctl station ${device%% 2*} show | grep "Connected network")
-status=$(iwctl station ${device%% 2*} show | grep "State")
+dvc="wlan0" # change this to your device's name
+net=$(iwctl station $dvc show)
+ntnm=${net##*Connected network     } && ntnm=${ntnm%% *}
+ntst=${net##*State                 } && ntst=${ntst%% *}
 
 case $1 in
 	"status")
-		if [ "${status##* }" = "connected" ]; then
-			echo ""
-		else
-			echo ""
-		fi ;;
+		[ "$ntst" = "connected" ] && ico="" || ico=""
+		echo $ico ;;
 	"network")
-		if [ "${status##* }" = "connected" ]; then
-			echo ${network##*network  }
-		else
-			echo "No connection"
-		fi ;;
+		[ "$ntst" = "connected" ] || ntnm="No connection"
+		echo $ntnm ;;
 	"toggle")
-		if [ -z "${status##* }" ]; then
-			iwctl device ${device%% 2*} set-property Powered on
-		else
-			iwctl device ${device%% 2*} set-property Powered off
-		fi ;;
+		[ -z "$ntst" ] && pwr="on" || pwr="off"
+		iwctl device $dvc set-property Powered $pwr ;;
 esac
