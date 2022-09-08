@@ -10,8 +10,8 @@ case $1 in
 		krn=$(uname -r)
 		echo ${krn%%_*} ;;
 	"pkg")
-    echo $(xbps-query -l | wc -l) || echo "unset" ;;
-    # echo $(pacman -Q | wc -l)
+    		echo $(xbps-query -l | wc -l) || echo "unset" ;;
+    		# echo $(pacman -Q | wc -l)
 	"sh")
 		echo $(basename $(readlink -f /bin/sh)) ;;
 	"upt")
