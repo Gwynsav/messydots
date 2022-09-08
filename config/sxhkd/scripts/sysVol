@@ -1,21 +1,18 @@
 #!/bin/sh
-
-# awk is hereby forbidden.
-
 case $1 in
 	"up")
-           amixer sset Master 3%+
-           state=$(amixer sget Master | grep "Left:")
-           state=${state#*[}
-           dunstify -h string:x-dunst-stack-tag:songvol -i "$HOME/.local/share/icons/Zafiro-icons/panel/22/audio-volume-medium.svg" "Audio" "Volume set to <b>${state%%]*}</b>" ;;
+		amixer sset Master 3%+
+		stt=$(amixer sget Master) && stt=${stt#*[} && lvl=${stt%%]*}
+		ico="audio-volume-high.svg" ;;
 	"down")
-           amixer sset Master 3%- 
-           state=$(amixer sget Master | grep "Left:")
-           state=${state#*[}
-           dunstify -h string:x-dunst-stack-tag:songvol -i "$HOME/.local/share/icons/Zafiro-icons/panel/22/audio-volume-low.svg" "Audio" "Volume set to <b>${state%%]*}</b>" ;;
+    		amixer sset Master 3%- 
+    		stt=$(amixer sget Master) && stt=${stt#*[} && lvl=${stt%%]*}
+    		ico="audio-volume-low.svg" ;;
 	"mute")
-           amixer sset Master toggle
-           state=$(amixer sget Master | grep "Left:")
-           state=${state##*[}
-           [ "${state%%]*}" = "on" ] && dunstify -h string:x-dunst-stack-tag:songvol -i "$HOME/.local/share/icons/Zafiro-icons/panel/22/audio-volume-high.svg" "Audio" "Volume <b>Unmuted</b>" || dunstify -h string:x-dunst-stack-tag:songvol -i "$HOME/.local/share/icons/Zafiro-icons/panel/22/audio-volume-muted.svg" "Audio" "Volume <b>Muted</b>" ;; 
+    		amixer sset Master toggle
+		stt=$(amixer sget Master) && stt=${stt##*[} && stt=${stt%%]*}
+    		[ "$stt" = "on" ] && lvl="Unmuted" || lvl="Muted" 
+    		[ "$stt" = "on" ] && ico="audio-volume-high.svg" || ico="audio-volume-muted.svg" ;; 
 esac
+dunstify -h string:x-dunst-stack-tag:songvol \
+    -i "$HOME/.local/share/icons/Zafiro-icons/panel/22/$ico" "Audio" "Volume set to <b>$lvl</b>"
