@@ -1,17 +1,17 @@
 #!/bin/sh
-
 # Here you should theorically only have to change the pkg variable to whatever commando can count your distro's packages, I left two examples there just in case.
 
-os=$(cat "/etc/os-release" | grep -w "ID=" | tr -d '"')
+os=$(cat "/etc/os-release")
+os=${os##*ID=\"} && os=${os%%\"*}
 case $1 in
 	"os")
-		echo ${os#*=} ;;
+		echo $os ;;
 	"krn")
 		krn=$(uname -r)
 		echo ${krn%%_*} ;;
 	"pkg")
-           echo $(xbps-query -l | wc -l) || echo "unset" ;;
-           # echo $(pacman -Q | wc -l)
+    echo $(xbps-query -l | wc -l) || echo "unset" ;;
+    # echo $(pacman -Q | wc -l)
 	"sh")
 		echo $(basename $(readlink -f /bin/sh)) ;;
 	"upt")
