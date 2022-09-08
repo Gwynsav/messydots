@@ -20,11 +20,11 @@ case $1 in
 		[ -z "$weather_temp" ] && weather_temp="n/a"
 		echo "$weather_temp°C" ;;
 	feels_like)
-		[ -z "$feels_like" 	 ] && feels_like="n/a"
-		echo "$feels_like°C" 	 ;;
+		[ -z "$feels_like"   ] && feels_like="n/a"
+		echo "$feels_like°C"   ;;
 	humidity)
-		[ -z "$humidity" 		 ] || humidity="n/a"
-		echo $humidity 				 ;;
+		[ -z "$humidity"     ] || humidity="n/a"
+		echo $humidity 	       ;;
 	weather_desc)
 		text="Disconnected"
 		[ "$weather_desc" = "Clouds" ] && text="It's Cloudy"
