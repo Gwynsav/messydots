@@ -8,7 +8,7 @@ case $1 in
 	"sysmute")
 		stt=${sftc#*] [} && stt=${stt%%]*}
 		[ "$stt" = "off" ] && icon="" || icon=""
-    echo $icon ;;
+    		echo $icon ;;
 	"micvol")
 		vol=${mftc#*[} && vol=${vol%%%*}
 		echo $vol ;; 
