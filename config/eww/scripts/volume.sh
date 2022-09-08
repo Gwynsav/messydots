@@ -1,34 +1,24 @@
 #!/bin/sh
-
-device=$(amixer | grep -w "Simple mixer control" | tr -d ''\')
-device=${device%%,*}
-device=${device##*control }
-
+sftc=$(amixer sget Master)
+mftc=$(amixer sget Capture)
 case $1 in
-	"audevice")
-		echo $device ;;
 	"sysvol")
-		vol=$(amixer sget $device | grep "Left:")
-                vol=${vol#*[}
-                echo ${vol%%%*};;
+		vol=${sftc#*[} && vol=${vol%%%*}
+		echo $svol ;;
 	"sysmute")
-		vol=$(amixer sget $device | grep "Left:")
-                vol=${vol##*[}
-		[ "${vol%%]*}" = "off" ] && icon="" || icon=""
-                echo $icon ;;
+		stt=${sftc#*] [} && stt=${stt%%]*}
+		[ "$stt" = "off" ] && icon="" || icon=""
+    echo $icon ;;
 	"micvol")
-		mic=$(amixer sget Capture | grep "Mono:")
-                mic=${mic#*[}
-                echo ${mic%%%*};; 
+		vol=${mftc#*[} && vol=${vol%%%*}
+		echo $vol ;; 
 	"micmute")
-		mic=$(amixer sget Capture | grep "Mono:")
-                mic=${mic##*[}
-		[ "${mic%%]*}" = "off" ] && icon="" || icon=""
-                echo $icon ;;
+		stt=${mftc#*] [} && stt=${stt%%]*}
+		[ "$stt" = "off" ] && icon="" || icon=""
+		echo $icon ;;
 	"musvol")
 		vol=$(playerctl volume)
 		vol=${vol%0000*}
 		[ "$vol" = "1.00" ] && vol=100 || vol=${vol##*.}
-                echo $vol
-
+		echo $vol
 esac
